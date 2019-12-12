@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 public class BShotBomb extends Sprite {
 
-	private final String shotImg = ImagePaths.getSBombPath();
+	private final String shotImg = ImagePaths.getBossShotPath();
 	private final int H_SPACE = 64;
 	private final int V_SPACE = 64;
 

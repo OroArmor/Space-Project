@@ -23,6 +23,8 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class GameBoard extends JPanel implements Runnable, Commons {
 
@@ -87,12 +89,15 @@ public class GameBoard extends JPanel implements Runnable, Commons {
 	// ANIMATOR
 	private Thread animator;
 	private Thread animator2;
+	private Thread animator3;
 
 	// CONSTRUCTOR
 	public GameBoard() {
 		initTS();
 	}
+	// TEXT FIELD
 
+	private JTextField field;
 	// ---------\\
 	// TODO INIT\\
 	// ---------\\
@@ -112,9 +117,14 @@ public class GameBoard extends JPanel implements Runnable, Commons {
 
 		inhs = false;
 		// array list declarations
-		bGame = new Button(201, 200, ImagePaths.getButton0Path());
-		highScores = new Button(201, 300, ImagePaths.getButton1Path());
+		bGame = new Button(201, 200, ImagePaths.getBeginGamePath());
+		highScores = new Button(201, 300, ImagePaths.getHighScoresPath());
 		title = new Title(73, 40);
+		
+		field = new JTextField(20);
+		add(field);
+		setVisible(true);
+
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -123,8 +133,7 @@ public class GameBoard extends JPanel implements Runnable, Commons {
 				if (bGame.isPressed && (isRunning == false && inhs == false)) {
 					gameInit();
 
-				}
-				if (highScores.isPressed && (isRunning == false && inhs == false)) {
+				}else if (highScores.isPressed && (isRunning == false && inhs == false)) {
 
 					try {
 						hsInit();
@@ -133,19 +142,19 @@ public class GameBoard extends JPanel implements Runnable, Commons {
 						e1.printStackTrace();
 					}
 
+				}else if(field.getText() != "") {
+					ImagePaths.setImagePath("AlexSprites\\", true);
 				}
 
 			}
 		});
-		if (animator2 == null || !ingame) {
-			animator2 = new Thread(this);
-			animator2.start();
-		}
+
 	}
 
 	private int[] hss = new int[3];
 
 	public void hsInit() throws FileNotFoundException {
+
 		inhs = true;
 
 		// TODO add interpretation of the txt file
@@ -158,7 +167,7 @@ public class GameBoard extends JPanel implements Runnable, Commons {
 			num++;
 		}
 		input.close();
-		menu = new Button(201, 500, ImagePaths.getButton2Path());
+		menu = new Button(201, 500, ImagePaths.getMainMenuPath());
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -170,11 +179,16 @@ public class GameBoard extends JPanel implements Runnable, Commons {
 
 			}
 		});
-
+		if (animator2 == null || !ingame) {
+			animator2 = new Thread(this);
+			animator2.start();
+		}
 	}
 
 	public void gameInit() {
-		animator2.stop();
+		if(animator2 != null)
+			animator2.stop();
+		field.setVisible(false);
 		isRunning = true;
 		inpause = false;
 		// array list declarations

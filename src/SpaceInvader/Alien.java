@@ -31,7 +31,7 @@ public class Alien extends Sprite {
 	}
 
 	public class Bomb extends Sprite {
-		private final String bombImg = ImagePaths.getBombPath();
+		private final String bombImg = ImagePaths.getAlienShotPath();
 		private boolean destroyed;
 
 		public Bomb(int x, int y) {
