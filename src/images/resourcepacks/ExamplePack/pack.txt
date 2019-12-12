@@ -1,0 +1,3 @@
+packName: name of pack
+packDescription: description of pack
+packCreator: creator of pack
